@@ -1,0 +1,1162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ampio Pharmaceuticals Securities Settlement — Project Execution Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f1117;
+    --surface: #181b24;
+    --surface-raised: #1e2230;
+    --border: #2a2f3e;
+    --border-accent: #3d4460;
+    --text: #e1e4ed;
+    --text-muted: #8b90a0;
+    --text-dim: #5c6178;
+    --accent: #5b8af5;
+    --accent-glow: rgba(91,138,245,0.12);
+    --risk-red: #f5555d;
+    --risk-red-bg: rgba(245,85,93,0.08);
+    --risk-red-border: rgba(245,85,93,0.25);
+    --warn-amber: #f5a623;
+    --warn-amber-bg: rgba(245,166,35,0.08);
+    --warn-amber-border: rgba(245,166,35,0.25);
+    --success: #34d399;
+    --success-bg: rgba(52,211,153,0.08);
+    --success-border: rgba(52,211,153,0.25);
+    --info-blue: #60a5fa;
+    --info-blue-bg: rgba(96,165,250,0.08);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.65;
+    font-size: 15px;
+    padding: 0;
+  }
+
+  .header {
+    background: linear-gradient(135deg, #141722 0%, #1a2035 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 48px 40px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(91,138,245,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .header-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1.6px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+  .header h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.3;
+    margin-bottom: 8px;
+  }
+  .header-sub {
+    font-size: 14px;
+    color: var(--text-muted);
+    max-width: 700px;
+  }
+  .meta-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+    margin-top: 28px;
+  }
+  .meta-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+  }
+  .meta-card .label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: var(--text-dim);
+    margin-bottom: 4px;
+    font-weight: 600;
+  }
+  .meta-card .value {
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+  }
+  .meta-card .value.money { color: var(--success); }
+
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 32px 40px 60px;
+  }
+
+  details {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin-bottom: 16px;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  details[open] { border-color: var(--border-accent); }
+  details summary {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 18px 24px;
+    cursor: pointer;
+    list-style: none;
+    font-weight: 600;
+    font-size: 16px;
+    color: #fff;
+    background: var(--surface-raised);
+    border-bottom: 1px solid transparent;
+    user-select: none;
+    transition: background 0.15s;
+  }
+  details[open] summary { border-bottom: 1px solid var(--border); }
+  details summary:hover { background: #232838; }
+  details summary::-webkit-details-marker { display: none; }
+  details summary::before {
+    content: '▸';
+    font-size: 13px;
+    color: var(--accent);
+    transition: transform 0.2s;
+    flex-shrink: 0;
+  }
+  details[open] summary::before { transform: rotate(90deg); }
+  .task-num {
+    background: var(--accent);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 9px;
+    border-radius: 4px;
+    letter-spacing: 0.5px;
+    flex-shrink: 0;
+  }
+  .section-body { padding: 24px 28px 28px; }
+
+  .sub-heading {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 28px 0 12px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--border);
+  }
+  .sub-heading:first-child { margin-top: 0; }
+
+  ul, ol { padding-left: 22px; margin: 8px 0; }
+  li { margin-bottom: 7px; color: var(--text); }
+  li::marker { color: var(--text-dim); }
+  strong { color: #fff; font-weight: 600; }
+
+  .table-wrap {
+    overflow-x: auto;
+    margin: 14px 0;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+  }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  thead th {
+    background: var(--surface-raised);
+    color: var(--text-muted);
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+    padding: 10px 14px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+  tbody td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  tbody tr:last-child td { border-bottom: none; }
+  tbody tr:hover { background: rgba(91,138,245,0.03); }
+
+  .callout {
+    border-radius: 8px;
+    padding: 14px 18px;
+    margin: 14px 0;
+    font-size: 13.5px;
+    line-height: 1.6;
+  }
+  .callout-risk { background: var(--risk-red-bg); border: 1px solid var(--risk-red-border); }
+  .callout-risk .callout-label { color: var(--risk-red); }
+  .callout-warn { background: var(--warn-amber-bg); border: 1px solid var(--warn-amber-border); }
+  .callout-warn .callout-label { color: var(--warn-amber); }
+  .callout-info { background: var(--info-blue-bg); border: 1px solid rgba(96,165,250,0.2); }
+  .callout-info .callout-label { color: var(--info-blue); }
+  .callout-success { background: var(--success-bg); border: 1px solid var(--success-border); }
+  .callout-success .callout-label { color: var(--success); }
+  .callout-label {
+    font-size: 10.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+  }
+
+  .phase-badge {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+  }
+  .phase-1 { background: rgba(96,165,250,0.15); color: #60a5fa; }
+  .phase-2 { background: rgba(168,85,247,0.15); color: #a855f7; }
+  .phase-3 { background: rgba(245,166,35,0.15); color: #f5a623; }
+  .phase-4 { background: rgba(52,211,153,0.15); color: #34d399; }
+  .phase-5 { background: rgba(245,85,93,0.15); color: #f5555d; }
+
+  .tag {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    padding: 2px 7px;
+    border-radius: 3px;
+    background: var(--accent-glow);
+    color: var(--accent);
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+  .tag-qa {
+    background: rgba(245,166,35,0.15);
+    color: var(--warn-amber);
+  }
+
+  p { margin: 8px 0; }
+
+  .footer {
+    text-align: center;
+    padding: 32px;
+    font-size: 12px;
+    color: var(--text-dim);
+    border-top: 1px solid var(--border);
+    margin-top: 20px;
+  }
+
+  /* ========= CHECKLIST STYLES ========= */
+  .checklist {
+    list-style: none;
+    padding-left: 0;
+    margin: 10px 0 0;
+    counter-reset: checklist-counter;
+  }
+  .checklist > li {
+    counter-increment: checklist-counter;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 14px;
+    margin-bottom: 2px;
+    border-radius: 8px;
+    transition: background 0.15s, opacity 0.25s;
+    position: relative;
+  }
+  .checklist > li:hover {
+    background: rgba(91,138,245,0.04);
+  }
+  .checklist > li.checked {
+    opacity: 0.5;
+  }
+  .checklist > li.checked .cl-text {
+    text-decoration: line-through;
+    text-decoration-color: var(--text-dim);
+  }
+
+  .cl-checkbox {
+    flex-shrink: 0;
+    width: 22px;
+    height: 22px;
+    border: 2px solid var(--border-accent);
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1px;
+    transition: all 0.15s;
+    background: transparent;
+  }
+  .cl-checkbox:hover {
+    border-color: var(--accent);
+    background: var(--accent-glow);
+  }
+  .cl-checkbox svg {
+    width: 14px;
+    height: 14px;
+    opacity: 0;
+    transition: opacity 0.15s;
+  }
+  .cl-checkbox svg path {
+    stroke: var(--accent);
+    stroke-width: 2.5;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .checklist > li.checked .cl-checkbox {
+    border-color: var(--accent);
+    background: var(--accent-glow);
+  }
+  .checklist > li.checked .cl-checkbox svg {
+    opacity: 1;
+  }
+
+  .cl-num {
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-dim);
+    background: var(--surface-raised);
+    border-radius: 5px;
+    margin-top: 0px;
+  }
+  .cl-text {
+    flex: 1;
+    min-width: 0;
+  }
+  .cl-text ul {
+    margin-top: 6px;
+    padding-left: 18px;
+  }
+  .cl-text ul li {
+    font-size: 13.5px;
+    margin-bottom: 4px;
+    color: var(--text-muted);
+  }
+
+  /* Phase progress bar */
+  .phase-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 4px;
+  }
+  .phase-progress {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+  }
+  .progress-bar-bg {
+    width: 120px;
+    height: 6px;
+    background: var(--border);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    border-radius: 3px;
+    transition: width 0.35s ease, background 0.35s;
+    width: 0%;
+  }
+  .progress-bar-fill.phase-1-fill { background: #60a5fa; }
+  .progress-bar-fill.phase-2-fill { background: #a855f7; }
+  .progress-bar-fill.phase-3-fill { background: #f5a623; }
+  .progress-bar-fill.phase-4-fill { background: #34d399; }
+  .progress-bar-fill.phase-5-fill { background: #f5555d; }
+  .progress-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-dim);
+    min-width: 36px;
+    text-align: right;
+  }
+
+  /* Global progress in header */
+  .global-progress-wrap {
+    margin-top: 24px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 16px;
+    grid-column: 1 / -1;
+  }
+  .global-progress-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+  .global-progress-top .label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: var(--text-dim);
+    font-weight: 600;
+  }
+  .global-progress-top .value {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--accent);
+  }
+  .global-bar-bg {
+    width: 100%;
+    height: 8px;
+    background: var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .global-bar-fill {
+    height: 100%;
+    border-radius: 4px;
+    background: linear-gradient(90deg, #60a5fa, #a855f7, #f5a623, #34d399);
+    transition: width 0.4s ease;
+    width: 0%;
+  }
+
+  .bid-note {
+    font-size: 12.5px;
+    color: var(--text-dim);
+    font-style: italic;
+    margin-bottom: 8px;
+    line-height: 1.5;
+  }
+
+  @media (max-width: 700px) {
+    .header { padding: 28px 20px; }
+    .container { padding: 20px 16px 40px; }
+    .section-body { padding: 16px; }
+    details summary { padding: 14px 16px; font-size: 14px; }
+    .progress-bar-bg { width: 80px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-label">Confidential — Project Execution Guide</div>
+  <h1>Ampio Pharmaceuticals Securities Class Action Settlement</h1>
+  <div class="header-sub">Case No. 1:22-cv-02105-WJM-MEH · U.S. District Court, District of Colorado · Judge William J. Martínez</div>
+
+  <div class="meta-grid">
+    <div class="meta-card">
+      <div class="label">Settlement Amount</div>
+      <div class="value money">$3,000,000.00</div>
+    </div>
+    <div class="meta-card">
+      <div class="label">Estimated Class Size</div>
+      <div class="value">5,100 members</div>
+    </div>
+    <div class="meta-card">
+      <div class="label">Preliminary Approval</div>
+      <div class="value">September 24, 2024</div>
+    </div>
+    <div class="meta-card">
+      <div class="label">Final Approval Hearing</div>
+      <div class="value">February 19, 2025</div>
+    </div>
+    <div class="meta-card">
+      <div class="label">Claims Administrator</div>
+      <div class="value">Simpluris</div>
+    </div>
+    <div class="meta-card">
+      <div class="label">Est. Admin Cost</div>
+      <div class="value money">$38,644</div>
+    </div>
+  </div>
+
+  <div class="global-progress-wrap">
+    <div class="global-progress-top">
+      <span class="label">Overall Checklist Progress</span>
+      <span class="value" id="global-pct">0%</span>
+    </div>
+    <div class="global-bar-bg">
+      <div class="global-bar-fill" id="global-bar"></div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- ============================================================ -->
+<!-- TASK 1 -->
+<!-- ============================================================ -->
+<details open>
+  <summary><span class="task-num">TASK 1</span> Executive Case Summary</summary>
+  <div class="section-body">
+    <div class="sub-heading">Parties</div>
+    <ul>
+      <li><strong>Lead Plaintiffs:</strong> Tao Wang and Synworld Technologies Corporation (individually and on behalf of all others similarly situated).</li>
+      <li><strong>Lead Counsel:</strong> Faruqi &amp; Faruqi, LLP (James M. Wilson, Jr.).</li>
+      <li><strong>Defendants:</strong> Ampio Pharmaceuticals, Inc.; Michael A. Martino; Holli Cherevka; Dan Stokely; David Bar-Or; Philip H. Coelho; Richard B. Giles. <em>(Note: Michael Macaluso was named in the original complaint but has since passed away and is not a party to the settlement.)</em></li>
+      <li><strong>Defendants' Counsel:</strong> Ballard Spahr LLP; Brownstein Hyatt Farber Schreck LLP; Pillsbury Winthrop Shaw Pittman LLP; Holland &amp; Hart LLP; Foley &amp; Lardner LLP; Hilgers Graben PLLC.</li>
+    </ul>
+    <div class="sub-heading">Class Definition &amp; Estimated Size</div>
+    <ul>
+      <li><strong>Settlement Class:</strong> All Persons who purchased or otherwise acquired Ampio common stock between <strong>December 29, 2020</strong> and <strong>August 2, 2022</strong>, inclusive, and were damaged thereby.</li>
+      <li><strong>Exclusions:</strong> Defendants; Immediate Family of Individual Defendants; subsidiaries/affiliates of Ampio and its current/former directors and officers; entities in which any Defendant has a controlling interest; legal representatives, agents, heirs, successors-in-interest of excluded parties; and any persons who timely and properly request exclusion.</li>
+      <li><strong>Estimated Class Size:</strong> <strong>5,100</strong> (per Sales Bid). Note: ~80% of common shares are held by institutions.</li>
+      <li><strong>No sub-classes</strong> are defined in the Settlement Agreement or Preliminary Approval Order.</li>
+    </ul>
+    <div class="sub-heading">Gross Settlement Fund &amp; Allocation Plan</div>
+    <ul>
+      <li><strong>Gross Settlement Amount:</strong> <strong>$3,000,000.00</strong> (all-in cash amount, inclusive of all fees, costs, and class member benefits).</li>
+      <li><strong>Settlement Fund =</strong> Settlement Amount + interest/accretions earned while in escrow.</li>
+      <li><strong>Deductions from Settlement Fund:</strong>
+        <ul>
+          <li>Taxes (federal, state, local on income earned by the fund)</li>
+          <li>Notice and Administration Costs (estimated <strong>$38,644</strong> per Simpluris bid)</li>
+          <li>Litigation Expenses awarded by the Court</li>
+          <li>Attorneys' fees awarded by the Court</li>
+          <li>Any other Court-approved costs/fees</li>
+        </ul>
+      </li>
+      <li><strong>Net Settlement Fund:</strong> The balance remaining after deductions, distributed to Authorized Claimants per the Court-approved Plan of Allocation on a pro rata basis based on recognized loss.</li>
+      <li><strong>Escrow Agent:</strong> Huntington National Bank.</li>
+      <li><strong>QSF:</strong> Settlement Fund is a Qualified Settlement Fund under Treasury Reg. § 1.468B-1.</li>
+      <li><strong>Pre-Effective Date Spending Cap:</strong> Up to <strong>$75,000</strong> may be advanced from escrow for Notice and Administration Costs and Taxes without further Court order.</li>
+      <li><strong>Number of Distributions:</strong> 2 (per Sales Bid).</li>
+    </ul>
+    <div class="sub-heading">Method of Notice</div>
+    <ul>
+      <li><strong>Postcard Notice (Direct Mail):</strong> Mailed by first-class mail to record holders of Ampio common stock, identified via transfer agent data.</li>
+      <li><strong>Broker/Nominee Outreach:</strong> Reasonable efforts to reach beneficial owners through broker/nominee forwarding process (nominees must forward within 10 calendar days or provide name lists).</li>
+      <li><strong>Summary Notice (Publication):</strong> Published once in <strong>Investor's Business Daily</strong> and transmitted once over <strong>PR Newswire</strong>.</li>
+      <li><strong>Settlement Website:</strong> Interactive class website (AmpioSecuritiesSettlement.com) hosting the Stipulation, exhibits, Preliminary Approval Order, Notice, and downloadable Claim Form with online claims filing capability.</li>
+      <li><strong>Undeliverable Mail Handling:</strong> NCOA search, CASS/DPV verification, skip trace via LexisNexis or similar; remailing of updated addresses.</li>
+      <li><strong>Language:</strong> English only.</li>
+    </ul>
+    <div class="sub-heading">Method of Disbursement</div>
+    <ul>
+      <li><strong>Primary Method:</strong> 100% mailed checks (per Sales Bid).</li>
+      <li><strong>2 distribution cycles</strong> anticipated.</li>
+      <li><strong>Estimated Valid Claimants:</strong> 1,148 (based on 25% claims rate, deficiency/rejection attrition).</li>
+    </ul>
+  </div>
+</details>
+
+<!-- ============================================================ -->
+<!-- TASK 2 -->
+<!-- ============================================================ -->
+<details>
+  <summary><span class="task-num">TASK 2</span> Critical Milestones &amp; Deadlines</summary>
+  <div class="section-body">
+    <div class="callout callout-info">
+      <div class="callout-label">Reference</div>
+      <strong>Preliminary Approval Date:</strong> September 24, 2024. All formula-based deadlines are calculated from this date unless otherwise noted.
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Date</th><th>Milestone</th><th>Source</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Sep 24, 2024</strong></td><td>Preliminary Approval Order entered by Court</td><td>PAO</td></tr>
+          <tr><td><strong>Oct 1, 2024</strong></td><td>Ampio / transfer agent provides electronic shareholder records to Claims Administrator</td><td>PAO ¶10</td></tr>
+          <tr><td><strong>~Oct 22, 2024</strong></td><td>Settlement Amount ($3M) deposited into Escrow Account <span class="tag">CALC'D</span><br><em>20 business days after later of PA or receipt of W-9/wire info</em></td><td>Stip. ¶8</td></tr>
+          <tr><td><strong>Oct 15, 2024</strong></td><td><strong>Notice Date:</strong> Postcard Notice mailed; website goes live</td><td>PAO ¶11</td></tr>
+          <tr><td><strong>~Oct 25, 2024</strong></td><td>Nominee 10-day window: forward notices or provide name/address lists</td><td>PAO ¶12</td></tr>
+          <tr><td><strong>Oct 29, 2024</strong></td><td>Summary Notice published in IBD; transmitted via PR Newswire</td><td>PAO ¶13</td></tr>
+          <tr><td><strong>Nov 29, 2024</strong></td><td>All undeliverable/skip trace efforts concluded</td><td>PAO ¶15</td></tr>
+          <tr><td><strong>Dec 23, 2024</strong></td><td>Lead Counsel files final approval motion, POA, and Fee Application</td><td>PAO ¶18</td></tr>
+          <tr><td><strong>Jan 13, 2025</strong></td><td><strong>Claim Filing Deadline</strong> (postmarked or electronic)</td><td>PAO ¶16</td></tr>
+          <tr><td><strong>Jan 13, 2025</strong></td><td>Response papers to final approval motion filed</td><td>PAO ¶18</td></tr>
+          <tr><td><strong>Jan 27, 2025</strong></td><td>Reply papers filed</td><td>PAO ¶18</td></tr>
+          <tr><td><strong>Jan 29, 2025</strong></td><td><strong>Opt-Out / Exclusion Deadline</strong></td><td>PAO ¶17</td></tr>
+          <tr><td><strong>Jan 29, 2025</strong></td><td><strong>Objection Deadline</strong></td><td>PAO ¶19</td></tr>
+          <tr><td><strong>Feb 12, 2025</strong></td><td>Proof of mailing/publication filed; Defendants file CAFA proof</td><td>PAO ¶14; Stip. ¶21</td></tr>
+          <tr><td><strong>Feb 19, 2025 10:30 AM</strong></td><td><strong>Settlement Fairness Hearing (Final Approval)</strong> — In-person, Courtroom A801, Denver</td><td>PAO ¶6</td></tr>
+          <tr><td><strong>Post-Final Approval</strong></td><td>Effective Date; claims processing; Court Distribution Order</td><td>Stip. ¶33</td></tr>
+          <tr><td><strong>TBD</strong></td><td>First &amp; second distributions; check cashing deadline; final accounting &amp; case close</td><td>Sales Bid</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</details>
+
+<!-- ============================================================ -->
+<!-- TASK 3: INTERACTIVE CHECKLIST -->
+<!-- ============================================================ -->
+<details open>
+  <summary><span class="task-num">TASK 3</span> Operational Action Checklist</summary>
+  <div class="section-body">
+
+    <!-- PHASE 1 -->
+    <div class="phase-header">
+      <div>
+        <span class="phase-badge phase-1">Phase 1</span>
+        <div class="sub-heading" style="margin-top:4px">Data Intake, Project Setup &amp; Pre-Notice</div>
+      </div>
+      <div class="phase-progress">
+        <div class="progress-bar-bg"><div class="progress-bar-fill phase-1-fill" id="bar-p1"></div></div>
+        <span class="progress-label" id="lbl-p1">0/11</span>
+      </div>
+    </div>
+    <p class="bid-note">Bid items: PM Case Setup (9 hrs) · Proj. Director Securities (4 hrs) · DB Manager Data Analysis (8 hrs) · Interactive Website ($2,250) · Hosting (10 mo) · SFTP Setup ($400) · PO Box (10 mo)</p>
+    <ul class="checklist" data-phase="p1">
+      <li data-id="p1-01">
+        <div class="cl-checkbox" onclick="toggleCheck(this)"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.5 3.5 6.5-7"/></svg></div>
+        <span class="cl-num">1</span>
+        <div class="cl-text"><strong>Project Assignment &amp; Kickoff</strong> — Assign PM; conduct internal kickoff reviewing Settlement Agreement, PAO, and Sales Bid; set up project in Cadence.</div>
+      </li>
+      <li data-id="p1-02">
+        <div class="cl-checkbox" onclick="toggleCheck(this)"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.5 3.5 6.5-7"/></svg></div>
+        <span class="cl-num">2</span>
+        <div class="cl-text"><strong>Client Welcome / PM Intro</strong> — Send introduction to Lead Counsel (Katherine Lenahan / James Wilson); obtain contacts; distribute instructions.</div>
+      </li>
+      <li data-id="p1-03">
+        <div class="cl-checkbox" onclick="toggleCheck(this)"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.5 3.5 6.5-7"/></svg></div>
+        <span class="cl-num">3</span>
+        <div class="cl-text"><strong>Secure Receipt of Transfer Agent Data</strong> — Receive electronic shareholder records from Ampio's transfer agent by <strong>October 1, 2024</strong>. Encrypted storage with access permissions per workflow.</div>
+      </li>
+      <li data-id="p1-04">
+        <div class="cl-checkbox" onclick="toggleCheck(this)"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.5 3.5 6.5-7"/></svg></div>
+        <span class="cl-num">4</span>
+        <div class="cl-text"><strong>Initial Data Analysis &amp; Scrub</strong>
+          <ul>
+            <li>De-duplication, address standardization, data quality review</li>
+            <li>Run NCOA/CASS on initial dataset</li>
+            <li>Present analysis to Lead Counsel for review</li>
+          </ul>
+        </div>
+      </li>
+      <li data-id="p1-05">
+        <div class="cl-checkbox" onclick="toggleCheck(this)"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.5 3.5 6.5-7"/></svg></div>
+        <span class="cl-num">5</span>
+        <div class="cl-text"><strong>Client Data Approval Gate</strong> — Obtain written confirmation from Lead Counsel that data is approved before master load. <span class="tag tag-qa">QA GATE</span></div>
+      </li>
+      <li data-id="p1-06">
+        <div class="cl-checkbox" onclick="toggleCheck(this)"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.5 3.5 6.5-7"/></svg></div>
+        <span class="cl-num">6</span>
+        <div class="cl-text"><strong>Master Data Load</strong> — Load approved data into Cadence system.</div>
+      </li>
+      <li data-id="p1-07">
+        <div class="cl-checkbox" onclick="toggleCheck(this)"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.5 3.5 6.5-7"/></svg></div>
+        <span class="cl-num">7</span>
+        <div class="cl-text"><strong>Establish SFTP</strong> — Set up secure file transfer for broker/nominee notice request handling.</div>
+      </li>
+      <li data-id="p1-08">
+        <div class="cl-checkbox" onclick="toggleCheck(this)"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.5 3.5 6.5-7"/></svg></div>
+        <span class="cl-num">8</span>
+        <div class="cl-text"><strong>Establish USPS PO Box</strong> — Secure dedicated PO Box for 10-month administration.</div>
+      </li>
+      <li data-id="p1-09">
+        <div class="cl-checkbox" onclick="toggleCheck(this)"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.5 3.5 6.5-7"/></svg></div>
+        <span class="cl-num">9</span>
+        <div class="cl-text"><strong>Website Development</strong> — Build interactive class website (AmpioSecuritiesSettlement.com) with Stipulation, exhibits, PAO, Notice, and online Claim Form. English only.</div>
+      </li>
+      <li data-id="p1-10">
+        <div class="cl-checkbox" onclick="toggleCheck(this)"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.5 3.5 6.5-7"/></svg></div>
+        <span class="cl-num">10</span>
+        <div class="cl-text"><strong>Website Review &amp; Approval</strong> — PM review → Tech QA → Lead Counsel approval before go-live. <span class="tag tag-qa">QA GATE</span></div>
+      </li>
+      <li data-id="p1-11">
+        <div class="cl-checkbox" onclick="toggleCheck(this)"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.5 3.5 6.5-7"/></svg></div>
+        <span class="cl-num">11</span>
+        <div class="cl-text"><strong>Case-Specific Response Tracking</strong> — Develop tracking database for claims, opt-outs, objections, and correspondence.</div>
+      </li>
+    </ul>
+
+    <!-- PHASE 2 -->
+    <div class="phase-header" style="margin-top:32px">
+      <div>
+        <span class="phase-badge phase-2">Phase 2</span>
+        <div class="sub-heading" style="margin-top:4px">Notice Campaign</div>
+      </div>
+      <div class="phase-progress">
+        <div class="progress-bar-bg"><div class="progress-bar-fill phase-2-fill" id="bar-p2"></div></div>
+        <span class="progress-label" id="lbl-p2">0/9</span>
+      </div>
+    </div>
+    <p class="bid-note">Bid items: Published Notice IBD + PR Newswire ($5,500) · Broker Comms (7 hrs) · Postcard (5,100) · Postage (5,100) · NCOA/CASS (5,100) · Skip Trace (510) · Remail (383) · Mailing Supervisor (6 hrs)</p>
+    <ul class="checklist" data-phase="p2">
+      <li data-id="p2-01">
+        <div class="cl-checkbox" onclick="toggleCheck(this)"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.5 3.5 6.5-7"/></svg></div>
+        <span class="cl-num">1</span>
+        <div class="cl-text"><strong>Mailing Document Preparation</strong> — Prepare Postcard Notice per Court-approved form; finalize addressing using NCOA/CASS-certified data.</div>
+      </li>
+      <li data-id="p2-02">
+        <div class="cl-checkbox" onclick="toggleCheck(this)"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.5 3.5 6.5-7"/></svg></div>
+        <span class="cl-num">2</span>
+        <div class="cl-text"><strong>Finalize &amp; QA Mailing Documents</strong> — PM and mailing supervisor review print-ready proofs. <span class="tag tag-qa">QA GATE</span></div>
+      </li>
+      <li data-id="p2-03">
+        <div class="cl-checkbox" onclick="toggleCheck(this)"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.5 3.5 6.5-7"/></svg></div>
+        <span class="cl-num">3</span>
+        <div class="cl-text"><strong>Print &amp; Mail Postcard Notice</strong> — First-class mail to all 5,100 record holders by <strong>October 15, 2024</strong>. Print &amp; mailing QA. <span class="tag tag-qa">QA GATE</span></div>
+      </li>
+      <li data-id="p2-04">
+        <div class="cl-checkbox" onclick="toggleCheck(this)"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.5 3.5 6.5-7"/></svg></div>
+        <span class="cl-num">4</span>
+        <div class="cl-text"><strong>Website Launch</strong> — Post all documents and Claim Form by <strong>October 15, 2024</strong> (concurrent with mailing).</div>
+      </li>
+      <li data-id="p2-05">
+        <div class="cl-checkbox" onclick="toggleCheck(this)"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.5 3.5 6.5-7"/></svg></div>
+        <span class="cl-num">5</span>
+        <div class="cl-text"><strong>Broker/Nominee Outreach</strong>
+          <ul>
+            <li>Identify and contact nominee purchasers</li>
+            <li>Track 10-day compliance window for forwarding/providing lists</li>
+            <li>Mail Postcard Notices to nominee-provided beneficial owners</li>
+            <li>Reimburse nominees per PAO ¶12 ($0.70/unit or $0.10/name)</li>
+          </ul>
+        </div>
+      </li>
+      <li data-id="p2-06">
+        <div class="cl-checkbox" onclick="toggleCheck(this)"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.5 3.5 6.5-7"/></svg></div>
+        <span class="cl-num">6</span>
+        <div class="cl-text"><strong>Published Notice</strong> — Cause Summary Notice to be published in Investor's Business Daily and PR Newswire by <strong>October 29, 2024</strong>.</div>
+      </li>
+      <li data-id="p2-07">
+        <div class="cl-checkbox" onclick="toggleCheck(this)"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.5 3.5 6.5-7"/></svg></div>
+        <span class="cl-num">7</span>
+        <div class="cl-text"><strong>Return Mail Processing</strong>
+          <ul>
+            <li>Immediately re-mail where USPS provides forwarding address</li>
+            <li>NCOA search → CASS/DPV verify → skip trace (LexisNexis) for remaining</li>
+            <li>All efforts concluded by <strong>November 29, 2024</strong></li>
+          </ul>
+        </div>
+      </li>
+      <li data-id="p2-08">
+        <div class="cl-checkbox" onclick="toggleCheck(this)"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.5 3.5 6.5-7"/></svg></div>
+        <span class="cl-num">8</span>
+        <div class="cl-text"><strong>Remail Notices</strong> — Remail Postcard Notices to updated addresses (~383 est. based on 75% skip success).</div>
+      </li>
+      <li data-id="p2-09">
+        <div class="cl-checkbox" onclick="toggleCheck(this)"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.5 3.5 6.5-7"/></svg></div>
+        <span class="cl-num">9</span>
+        <div class="cl-text"><strong>Proof of Mailing &amp; Publication</strong> — Prepare declaration for Lead Counsel filing by <strong>February 12, 2025</strong>.</div>
+      </li>
+    </ul>
+
+    <!-- PHASE 3 -->
+    <div class="phase-header" style="margin-top:32px">
+      <div>
+        <span class="phase-badge phase-3">Phase 3</span>
+        <div class="sub-heading" style="margin-top:4px">Claims Processing, Contact Center &amp; Response Handling</div>
+      </div>
+      <div class="phase-progress">
+        <div class="progress-bar-bg"><div class="progress-bar-fill phase-3-fill" id="bar-p3"></div></div>
+        <span class="progress-label" id="lbl-p3">0/12</span>
+      </div>
+    </div>
+    <p class="bid-note">Bid items: IVR Setup ($350) · Uptime (10 mo) · Calls (18 hrs) · Toll-Free (102 min) · Claims Mgr (6 hrs) · Claims QA (4 hrs) · Physical Claims (510) · Web Claims (765) · Deficiency (191) · Denial (128) · Correspondence (3 hrs) · Data Entry (16 hrs) · Opt-out (51) · Reporting (8 hrs)</p>
+    <ul class="checklist" data-phase="p3">
+      <li data-id="p3-01">
+        <div class="cl-checkbox" onclick="toggleCheck(this)"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.5 3.5 6.5-7"/></svg></div>
+        <span class="cl-num">1</span>
+        <div class="cl-text"><strong>Contact Center Setup</strong> — Establish toll-free number; build IVR scripts and call trees; configure live agents (business hours) and 24/7 IVR.</div>
+      </li>
+      <li data-id="p3-02">
+        <div class="cl-checkbox" onclick="toggleCheck(this)"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.5 3.5 6.5-7"/></svg></div>
+        <span class="cl-num">2</span>
+        <div class="cl-text"><strong>Contact Center QA &amp; Approval</strong> — PM reviews and approves IVR, scripts, call trees before activation. <span class="tag tag-qa">QA GATE</span></div>
+      </li>
+      <li data-id="p3-03">
+        <div class="cl-checkbox" onclick="toggleCheck(this)"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.5 3.5 6.5-7"/></svg></div>
+        <span class="cl-num">3</span>
+        <div class="cl-text"><strong>Claims Intake</strong> — Receive physical claims via PO Box (~510, 40%) and electronic claims via website (~765, 60%); OCR / data entry for physical claims.</div>
+      </li>
+      <li data-id="p3-04">
+        <div class="cl-checkbox" onclick="toggleCheck(this)"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.5 3.5 6.5-7"/></svg></div>
+        <span class="cl-num">4</span>
+        <div class="cl-text"><strong>Claims Review &amp; Validation</strong> — Evaluate each claim for facial validity; confirm Ampio stock purchase during Class Period; est. 1,275 facially valid.</div>
+      </li>
+      <li data-id="p3-05">
+        <div class="cl-checkbox" onclick="toggleCheck(this)"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.5 3.5 6.5-7"/></svg></div>
+        <span class="cl-num">5</span>
+        <div class="cl-text"><strong>Claims Analyst QA</strong> — Dedicated QA review of claim determinations (4 hrs). <span class="tag tag-qa">QA GATE</span></div>
+      </li>
+      <li data-id="p3-06">
+        <div class="cl-checkbox" onclick="toggleCheck(this)"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.5 3.5 6.5-7"/></svg></div>
+        <span class="cl-num">6</span>
+        <div class="cl-text"><strong>Deficiency / Cure Processing</strong> — Issue cure notices for ~191 deficient claims; track response window; follow up.</div>
+      </li>
+      <li data-id="p3-07">
+        <div class="cl-checkbox" onclick="toggleCheck(this)"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.5 3.5 6.5-7"/></svg></div>
+        <span class="cl-num">7</span>
+        <div class="cl-text"><strong>Claims Denial Processing</strong> — Issue denial letters with postage for ~128 claims with no recognized losses.</div>
+      </li>
+      <li data-id="p3-08">
+        <div class="cl-checkbox" onclick="toggleCheck(this)"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.5 3.5 6.5-7"/></svg></div>
+        <span class="cl-num">8</span>
+        <div class="cl-text"><strong>Opt-Out / Exclusion Processing</strong> — Receive, log, and process ~51 exclusion requests (deadline: <strong>Jan 29, 2025</strong>); report list to Lead Counsel.</div>
+      </li>
+      <li data-id="p3-09">
+        <div class="cl-checkbox" onclick="toggleCheck(this)"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.5 3.5 6.5-7"/></svg></div>
+        <span class="cl-num">9</span>
+        <div class="cl-text"><strong>Objection Tracking</strong> — Log objections (deadline: <strong>Jan 29, 2025</strong>); forward copies to Lead Counsel and Defendants' Counsel.</div>
+      </li>
+      <li data-id="p3-10">
+        <div class="cl-checkbox" onclick="toggleCheck(this)"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.5 3.5 6.5-7"/></svg></div>
+        <span class="cl-num">10</span>
+        <div class="cl-text"><strong>Contact Center Operations</strong> — Handle inbound calls and written inquiries throughout claims period (~51 calls at 5 min; 9 min correspondence).</div>
+      </li>
+      <li data-id="p3-11">
+        <div class="cl-checkbox" onclick="toggleCheck(this)"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.5 3.5 6.5-7"/></svg></div>
+        <span class="cl-num">11</span>
+        <div class="cl-text"><strong>Reporting to Counsel</strong> — Regular status reports on claims, deficiency rates, opt-outs, objections, and contact center activity (8 hrs).</div>
+      </li>
+      <li data-id="p3-12">
+        <div class="cl-checkbox" onclick="toggleCheck(this)"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.5 3.5 6.5-7"/></svg></div>
+        <span class="cl-num">12</span>
+        <div class="cl-text"><strong>Late Claims Handling</strong> — Per PAO ¶16, Lead Counsel may accept late claims at discretion; coordinate as needed.</div>
+      </li>
+    </ul>
+
+    <!-- PHASE 4 -->
+    <div class="phase-header" style="margin-top:32px">
+      <div>
+        <span class="phase-badge phase-4">Phase 4</span>
+        <div class="sub-heading" style="margin-top:4px">Award Calculation &amp; Disbursement</div>
+      </div>
+      <div class="phase-progress">
+        <div class="progress-bar-bg"><div class="progress-bar-fill phase-4-fill" id="bar-p4"></div></div>
+        <span class="progress-label" id="lbl-p4">0/15</span>
+      </div>
+    </div>
+    <p class="bid-note">Bid items: POA Calcs 2x (7 hrs) · 3rd Party Validation (1 hr) · PM (12 hrs) · QSF/Bank Setup ($1,200) · QSF Monthly (10 mo) · Distro Mgr (6 hrs) · Disbursement Mgr (4 hrs) · Checks (1,148) · Postage (1,148) · Returned Checks (58) · Remail Checks (49) · Reporting (8 hrs)</p>
+    <ul class="checklist" data-phase="p4">
+      <li data-id="p4-01">
+        <div class="cl-checkbox" onclick="toggleCheck(this)"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.5 3.5 6.5-7"/></svg></div>
+        <span class="cl-num">1</span>
+        <div class="cl-text"><strong>Final Claim Audit</strong> — Comprehensive audit of all claims, responses, opt-outs, and objections once claims deadline passes and cures are resolved.</div>
+      </li>
+      <li data-id="p4-02">
+        <div class="cl-checkbox" onclick="toggleCheck(this)"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.5 3.5 6.5-7"/></svg></div>
+        <span class="cl-num">2</span>
+        <div class="cl-text"><strong>Fraud Analysis</strong> — Response and fraud evaluation of claim submissions per workflow.</div>
+      </li>
+      <li data-id="p4-03">
+        <div class="cl-checkbox" onclick="toggleCheck(this)"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.5 3.5 6.5-7"/></svg></div>
+        <span class="cl-num">3</span>
+        <div class="cl-text"><strong>Lead Counsel Approval of Finalized Claims</strong> — Present finalized claims report; obtain written approval. <span class="tag tag-qa">QA GATE</span></div>
+      </li>
+      <li data-id="p4-04">
+        <div class="cl-checkbox" onclick="toggleCheck(this)"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.5 3.5 6.5-7"/></svg></div>
+        <span class="cl-num">4</span>
+        <div class="cl-text"><strong>QSF / Banking Setup</strong> — Establish 26 CFR § 1.468B-1 compliant QSF; set up EIN, bank account with FDIC pass-through; coordinate with Huntington National Bank.</div>
+      </li>
+      <li data-id="p4-05">
+        <div class="cl-checkbox" onclick="toggleCheck(this)"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.5 3.5 6.5-7"/></svg></div>
+        <span class="cl-num">5</span>
+        <div class="cl-text"><strong>Plan of Allocation Calculations (Distribution 1)</strong> — Calculate recognized loss per Authorized Claimant; determine pro rata share of Net Settlement Fund.</div>
+      </li>
+      <li data-id="p4-06">
+        <div class="cl-checkbox" onclick="toggleCheck(this)"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.5 3.5 6.5-7"/></svg></div>
+        <span class="cl-num">6</span>
+        <div class="cl-text"><strong>3rd Party Validation of Calculations</strong> — Independent validation of POA calculations. <span class="tag tag-qa">QA GATE</span></div>
+      </li>
+      <li data-id="p4-07">
+        <div class="cl-checkbox" onclick="toggleCheck(this)"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.5 3.5 6.5-7"/></svg></div>
+        <span class="cl-num">7</span>
+        <div class="cl-text"><strong>Send Calculations to Lead Counsel for Approval</strong> — Present payment calcs; obtain written approval before disbursement. <span class="tag tag-qa">QA GATE</span></div>
+      </li>
+      <li data-id="p4-08">
+        <div class="cl-checkbox" onclick="toggleCheck(this)"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.5 3.5 6.5-7"/></svg></div>
+        <span class="cl-num">8</span>
+        <div class="cl-text"><strong>Class Distribution Order</strong> — Lead Counsel applies to Court for order authorizing distribution (Stip. ¶28).</div>
+      </li>
+      <li data-id="p4-09">
+        <div class="cl-checkbox" onclick="toggleCheck(this)"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.5 3.5 6.5-7"/></svg></div>
+        <span class="cl-num">9</span>
+        <div class="cl-text"><strong>Receive Funds</strong> — Coordinate transfer of funds from escrow to disbursement account.</div>
+      </li>
+      <li data-id="p4-10">
+        <div class="cl-checkbox" onclick="toggleCheck(this)"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.5 3.5 6.5-7"/></svg></div>
+        <span class="cl-num">10</span>
+        <div class="cl-text"><strong>Check Template Setup &amp; QA</strong> — Design check template; proof and obtain approval. <span class="tag tag-qa">QA GATE</span></div>
+      </li>
+      <li data-id="p4-11">
+        <div class="cl-checkbox" onclick="toggleCheck(this)"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.5 3.5 6.5-7"/></svg></div>
+        <span class="cl-num">11</span>
+        <div class="cl-text"><strong>Print &amp; Mail Checks (Distribution 1)</strong> — Generate print files for 1,148 claimants; print, QA printed checks, and mail. <span class="tag tag-qa">QA GATE</span></div>
+      </li>
+      <li data-id="p4-12">
+        <div class="cl-checkbox" onclick="toggleCheck(this)"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.5 3.5 6.5-7"/></svg></div>
+        <span class="cl-num">12</span>
+        <div class="cl-text"><strong>Return Mail / Check Processing</strong> — Process returned checks (~58); skip trace for updated addresses; remail (~49).</div>
+      </li>
+      <li data-id="p4-13">
+        <div class="cl-checkbox" onclick="toggleCheck(this)"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.5 3.5 6.5-7"/></svg></div>
+        <span class="cl-num">13</span>
+        <div class="cl-text"><strong>Check Cashing Monitoring</strong> — Track check cashing rates through cashing deadline.</div>
+      </li>
+      <li data-id="p4-14">
+        <div class="cl-checkbox" onclick="toggleCheck(this)"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.5 3.5 6.5-7"/></svg></div>
+        <span class="cl-num">14</span>
+        <div class="cl-text"><strong>Second Distribution / Redistribution</strong> — Calculate and disburse uncashed/residual funds per Court order, if applicable.</div>
+      </li>
+      <li data-id="p4-15">
+        <div class="cl-checkbox" onclick="toggleCheck(this)"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.5 3.5 6.5-7"/></svg></div>
+        <span class="cl-num">15</span>
+        <div class="cl-text"><strong>Bank Reconciliation</strong> — Monthly reconciliation of QSF account (10 months).</div>
+      </li>
+    </ul>
+
+    <!-- PHASE 5 -->
+    <div class="phase-header" style="margin-top:32px">
+      <div>
+        <span class="phase-badge phase-5">Phase 5</span>
+        <div class="sub-heading" style="margin-top:4px">Tax Reporting, Final Accounting &amp; Case Close-Out</div>
+      </div>
+      <div class="phase-progress">
+        <div class="progress-bar-bg"><div class="progress-bar-fill phase-5-fill" id="bar-p5"></div></div>
+        <span class="progress-label" id="lbl-p5">0/6</span>
+      </div>
+    </div>
+    <p class="bid-note">Bid items: QSF Tax Reporting (2 tax years) · Data Mgr Final Reporting (6 hrs) · Clerical (8 hrs) · PM Close Case (5 hrs) · Proj. Director Final Declaration (1 hr)</p>
+    <ul class="checklist" data-phase="p5">
+      <li data-id="p5-01">
+        <div class="cl-checkbox" onclick="toggleCheck(this)"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.5 3.5 6.5-7"/></svg></div>
+        <span class="cl-num">1</span>
+        <div class="cl-text"><strong>Tax Payments &amp; Reporting</strong> — Prepare and file QSF tax returns for tax years 2024 and 2025; timely tax payments from Settlement Fund; relation back election per Treas. Reg. § 1.468B-1(j).</div>
+      </li>
+      <li data-id="p5-02">
+        <div class="cl-checkbox" onclick="toggleCheck(this)"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.5 3.5 6.5-7"/></svg></div>
+        <span class="cl-num">2</span>
+        <div class="cl-text"><strong>Final Accounting</strong> — Complete reconciliation of all receipts, disbursements, and remaining funds.</div>
+      </li>
+      <li data-id="p5-03">
+        <div class="cl-checkbox" onclick="toggleCheck(this)"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.5 3.5 6.5-7"/></svg></div>
+        <span class="cl-num">3</span>
+        <div class="cl-text"><strong>Final Report</strong> — Prepare, review, and send comprehensive final report to Lead Counsel.</div>
+      </li>
+      <li data-id="p5-04">
+        <div class="cl-checkbox" onclick="toggleCheck(this)"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.5 3.5 6.5-7"/></svg></div>
+        <span class="cl-num">4</span>
+        <div class="cl-text"><strong>Final Declaration</strong> — Project Director prepares final declaration for Court filing.</div>
+      </li>
+      <li data-id="p5-05">
+        <div class="cl-checkbox" onclick="toggleCheck(this)"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.5 3.5 6.5-7"/></svg></div>
+        <span class="cl-num">5</span>
+        <div class="cl-text"><strong>Data &amp; Document Retention</strong> — Retain bank/tax documents per law; destroy remaining project data 3 years post-conclusion (per Simpluris T&amp;Cs §7).</div>
+      </li>
+      <li data-id="p5-06">
+        <div class="cl-checkbox" onclick="toggleCheck(this)"><svg viewBox="0 0 16 16"><path d="M3 8.5l3.5 3.5 6.5-7"/></svg></div>
+        <span class="cl-num">6</span>
+        <div class="cl-text"><strong>Case Close-Out</strong> — Archive project in Cadence; deactivate website, PO Box, and toll-free number per retention schedule.</div>
+      </li>
+    </ul>
+
+    <div class="callout callout-success" style="margin-top:24px">
+      <div class="callout-label">Bid Reconciliation</div>
+      All line items from the Simpluris Sales Bid ($38,644 total) are mapped above. <strong>Optional Services</strong> (Final Disposition Letters — 360 mailed + 60 emailed = $920.60) require separate Lead Counsel authorization.
+    </div>
+
+  </div>
+</details>
+
+<!-- ============================================================ -->
+<!-- TASK 4 -->
+<!-- ============================================================ -->
+<details>
+  <summary><span class="task-num">TASK 4</span> Discrepancy &amp; Risk Analysis</summary>
+  <div class="section-body">
+
+    <div class="sub-heading">Timeline &amp; Deadline Discrepancies</div>
+
+    <div class="callout callout-risk">
+      <div class="callout-label">⚠ Discrepancy #1 — Data Transfer Deadline</div>
+      <ul>
+        <li><strong>PAO ¶10:</strong> Ampio provides records by <strong>October 1, 2024</strong>.</li>
+        <li><strong>Stip. ¶20:</strong> Within 5 business days of PA entry = <strong>October 1, 2024</strong>.</li>
+      </ul>
+      <p><strong>Assessment:</strong> Consistent. Tight 7-day calendar window — confirm transfer agent readiness.</p>
+    </div>
+
+    <div class="callout callout-risk">
+      <div class="callout-label">⚠ Discrepancy #2 — Escrow Funding Timing Ambiguity</div>
+      <p><strong>Stip. ¶8:</strong> $3M due within 20 business days of the later of PA entry or receipt of W-9/wire info. Actual funding date depends on when Lead Counsel delivered banking docs. <strong>Action:</strong> Confirm W-9 delivery date and actual funding date with counsel.</p>
+    </div>
+
+    <div class="sub-heading">Scope of Work Discrepancies</div>
+
+    <div class="callout callout-risk">
+      <div class="callout-label">⚠ Discrepancy #3 — Email Notice Not in Base Bid</div>
+      <p>The Stipulation references Notice being "mailed or emailed to Settlement Class Members upon request." The Sales Bid includes <strong>only postcard notice</strong> and publication; email notice is under <strong>Optional Services</strong> ($462.40). <strong>Action:</strong> Clarify if proactive email blast is required or only upon-request fulfillment.</p>
+    </div>
+
+    <div class="callout callout-risk">
+      <div class="callout-label">⚠ Discrepancy #4 — Nominee Reimbursement Not Budgeted</div>
+      <p><strong>PAO ¶12:</strong> Reimburse nominees up to $0.70/unit (mailing) or $0.10/name (lists). Sales Bid has no pass-through line item. This is a Settlement Fund cost, not admin fee, but could be significant given ~80% institutional ownership. <strong>Action:</strong> Monitor against $75K pre-approval spending cap.</p>
+    </div>
+
+    <div class="callout callout-risk">
+      <div class="callout-label">⚠ Discrepancy #5 — Final Disposition Letters Not in Base Bid</div>
+      <p>Final Disposition Letters ($920.60) are <strong>Optional Services</strong>. If Lead Counsel or the Court requires claimant notification of recognized loss amounts, scope addendum needed.</p>
+    </div>
+
+    <div class="sub-heading">Class Size &amp; Volume Risks</div>
+
+    <div class="callout callout-warn">
+      <div class="callout-label">⚠ Risk #6 — Class Size May Be Understated</div>
+      <p>The 5,100 estimate likely represents record holders, not beneficial owners. With ~80% institutional ownership, the nominee process could surface significantly more beneficial owners, increasing all volume estimates. <strong>Action:</strong> Monitor nominee returns; prepare for scope revision.</p>
+    </div>
+
+    <div class="callout callout-warn">
+      <div class="callout-label">⚠ Risk #7 — 25% Claims Rate Assumption</div>
+      <p>Securities class action claims rates vary widely (10–30%). Deviations will impact claims processing, deficiency, and disbursement volumes. Standard estimation risk — monitor closely.</p>
+    </div>
+
+    <div class="sub-heading">Financial &amp; Administration Risks</div>
+
+    <div class="callout callout-success">
+      <div class="callout-label">✓ No Discrepancy — Settlement Amount</div>
+      <p>Settlement Agreement (¶tt) specifies <strong>$3,000,000.00</strong>. Consistent across all documents.</p>
+    </div>
+
+    <div class="callout callout-warn">
+      <div class="callout-label">⚠ Risk #8 — Pre-Approval Spending Cap</div>
+      <p>$75,000 cap vs. $38,644 estimate = comfortable buffer. However, if class size increases via nominee processing, costs could rise. Amounts exceeding $75K pre-Effective Date require Court approval.</p>
+    </div>
+
+    <div class="callout callout-success">
+      <div class="callout-label">✓ No Discrepancy — Language Requirements</div>
+      <p>English only per Sales Bid. No multilingual requirement in Settlement Agreement or PAO.</p>
+    </div>
+
+    <div class="sub-heading">Miscellaneous Risks</div>
+
+    <div class="callout callout-warn">
+      <div class="callout-label">⚠ Risk #9 — CAFA Notice (Defendants' Obligation)</div>
+      <p>Not in Simpluris' scope. Monitor that Defendants file CAFA proof by <strong>Feb 12, 2025</strong>; failure could delay Final Approval.</p>
+    </div>
+
+    <div class="callout callout-warn">
+      <div class="callout-label">⚠ Risk #10 — Settlement Termination Triggers</div>
+      <p>Either party may terminate if opt-outs exceed a confidential threshold (Stip. ¶36). <strong>Action:</strong> Monitor opt-out volume closely; alert Lead Counsel immediately if approaching threshold.</p>
+    </div>
+
+    <div class="callout callout-warn">
+      <div class="callout-label">⚠ Risk #11 — Digital Payments Not Scoped</div>
+      <p>Sales Bid assumes 100% mailed checks. The Workflow references Wire/ACH as possible methods. If digital payments are requested, scope change required.</p>
+    </div>
+
+    <div class="sub-heading">Action Items for Legal Counsel</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>#</th><th>Issue</th><th>Priority</th><th>Action Required</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Transfer agent data readiness</td><td><strong style="color:var(--risk-red)">HIGH</strong></td><td>Confirm Ampio delivered data by Oct 1, 2024</td></tr>
+          <tr><td>2</td><td>Escrow funding confirmation</td><td><strong style="color:var(--warn-amber)">MED</strong></td><td>Confirm W-9 delivery date and actual funding date</td></tr>
+          <tr><td>3</td><td>Email notice scope</td><td><strong style="color:var(--warn-amber)">MED</strong></td><td>Clarify if proactive email blast required; activate Optional Services if so</td></tr>
+          <tr><td>4</td><td>Nominee reimbursement monitoring</td><td><strong style="color:var(--warn-amber)">MED</strong></td><td>Track pass-through costs vs. $75K cap</td></tr>
+          <tr><td>5</td><td>Final Disposition Letters</td><td><strong style="color:var(--text-muted)">LOW</strong></td><td>Determine if required; approve Optional Services addendum</td></tr>
+          <tr><td>6</td><td>Class size expansion via nominees</td><td><strong style="color:var(--risk-red)">HIGH</strong></td><td>Monitor nominee returns; prepare scope revision</td></tr>
+          <tr><td>7</td><td>CAFA proof deadline</td><td><strong style="color:var(--warn-amber)">MED</strong></td><td>Confirm Defendants will file by Feb 12, 2025</td></tr>
+          <tr><td>8</td><td>Opt-out threshold monitoring</td><td><strong style="color:var(--risk-red)">HIGH</strong></td><td>Track opt-out volume; alert counsel if nearing threshold</td></tr>
+          <tr><td>9</td><td>Digital payment option</td><td><strong style="color:var(--text-muted)">LOW</strong></td><td>Confirm 100% check or request scope change for ACH/wire</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</details>
+
+<div class="footer">
+  Ampio Pharmaceuticals Securities Class Action Settlement — Project Execution Guide<br>
+  Prepared for Simpluris Operations Team · Confidential &amp; Proprietary
+</div>
+
+</div>
+
+<script>
+// ===== Checklist State Management =====
+const STORAGE_KEY = 'ampio-checklist-state';
+
+function loadState() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    return raw ? JSON.parse(raw) : {};
+  } catch { return {}; }
+}
+
+function saveState(state) {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch {}
+}
+
+function toggleCheck(checkboxEl) {
+  const li = checkboxEl.closest('li');
+  const id = li.dataset.id;
+  const state = loadState();
+  if (li.classList.contains('checked')) {
+    li.classList.remove('checked');
+    delete state[id];
+  } else {
+    li.classList.add('checked');
+    state[id] = true;
+  }
+  saveState(state);
+  updateProgress();
+}
+
+function restoreChecks() {
+  const state = loadState();
+  document.querySelectorAll('.checklist > li').forEach(li => {
+    if (state[li.dataset.id]) li.classList.add('checked');
+  });
+}
+
+function updateProgress() {
+  const phases = ['p1','p2','p3','p4','p5'];
+  let totalItems = 0, totalChecked = 0;
+
+  phases.forEach(phase => {
+    const items = document.querySelectorAll(`.checklist[data-phase="${phase}"] > li`);
+    const checked = document.querySelectorAll(`.checklist[data-phase="${phase}"] > li.checked`);
+    const total = items.length;
+    const done = checked.length;
+    totalItems += total;
+    totalChecked += done;
+
+    const bar = document.getElementById(`bar-${phase}`);
+    const lbl = document.getElementById(`lbl-${phase}`);
+    if (bar) bar.style.width = total ? `${(done/total)*100}%` : '0%';
+    if (lbl) lbl.textContent = `${done}/${total}`;
+  });
+
+  const globalPct = totalItems ? Math.round((totalChecked/totalItems)*100) : 0;
+  const globalBar = document.getElementById('global-bar');
+  const globalLbl = document.getElementById('global-pct');
+  if (globalBar) globalBar.style.width = `${globalPct}%`;
+  if (globalLbl) globalLbl.textContent = `${globalPct}% (${totalChecked}/${totalItems})`;
+}
+
+// Init
+restoreChecks();
+updateProgress();
+</script>
+
+</body>
+</html>
